@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+.env
+
+proxies.txt
+
+__pycache__/
+
+supervisor.pid

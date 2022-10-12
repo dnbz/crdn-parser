@@ -1,0 +1,12 @@
+services:
+  kolesa_parser:
+    container_name: kolesa_parser
+    build: ./
+    restart: always
+    volumes:
+      - ./:/app
+      - ./docker/parser-supervisor.conf:/etc/supervisor/conf.d/parser.conf
+      - ./docker/crontab:/etc/crontab
+    environment:
+      TZ: Europe/Moscow
+      # STOP_PARSER: "True"
