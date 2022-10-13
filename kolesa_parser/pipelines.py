@@ -119,7 +119,13 @@ class SaveCarPipeline:
             else None
         )
 
-        listing.condition = item["condition"]
+        # состояние машины
+        if item.get("mortgaged_badge") is not None:
+            listing.condition = "Аварийная/Не на ходу"
+        elif item.get("new_badge") is not None:
+            listing.condition = "Новая"
+        else:
+            listing.condition = "На ходу"
 
         listing.update_at = time_now()
         listing.create_at = time_now()

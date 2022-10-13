@@ -85,6 +85,14 @@ class Car(scrapy.Item):
         # output_processor=Join(),
         output_processor=TakeFirst(),
     )
+    mortgaged_badge = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst(),
+    )
+    new_badge = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst(),
+    )
     complectation = scrapy.Field(
         input_processor=MapCompose(remove_tags, str.strip),
         output_processor=TakeFirst(),

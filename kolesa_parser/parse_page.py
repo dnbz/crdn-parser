@@ -71,21 +71,11 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
 
     il.add_xpath("image", "//button[@class='gallery__main js__gallery-main']//img/@src")
 
-    # TODO: move logic into pipeline
-    new_badge = response.xpath(
-        "//span[contains(@class, 'a-labels__item--new')]/text()"
-    ).get()
-    mortgaged_badge = response.xpath(
-        "//div[contains(@class, 'offer__parameters-mortgaged')]/text()"
-    ).get()
+    il.add_xpath("new_badge", "//span[contains(@class, 'a-labels__item--new')]/text()")
 
-    if mortgaged_badge is not None:
-        condition = "Аварийная/Не на ходу"
-    elif new_badge is not None:
-        condition = "Новая"
-    else:
-        condition = "На ходу"
-
-    il.add_value("condition", condition)
+    il.add_xpath(
+        "mortgaged_badge",
+        "//div[contains(@class, 'offer__parameters-mortgaged')]/text()",
+    )
 
     return il.load_item()
