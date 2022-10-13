@@ -34,7 +34,10 @@ PAGE_STOP_NO_NEW = os.environ.get("PARSER_PAGE_STOP_NO_NEW")
 # количество объявлений на странице
 PAGE_SIZE = 20
 
-LOG_FILE = Path.cwd() / ("logs/" + datetime.now().strftime("%Y-%m-%d") + "_parser.log")
+STDOUT_LOG = bool(os.environ.get("STDOUT_LOG", False))
+
+if not STDOUT_LOG:
+    LOG_FILE = Path.cwd() / ("logs/" + datetime.now().strftime("%Y-%m-%d") + "_parser.log")
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
