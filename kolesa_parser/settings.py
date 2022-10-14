@@ -29,6 +29,8 @@ PARSER_NODE = os.environ.get("PARSER_NODE", "node-2")
 
 KOLESA_MAX_PAGES = int(os.environ.get("MAX_PAGES", 1000))
 
+KOLESA_IMG_SIZE = "750x470"
+
 # сколько страниц без новых объявлений нужно пройти, перед тем как остановиться
 PAGE_STOP_NO_NEW = os.environ.get("PARSER_PAGE_STOP_NO_NEW")
 # количество объявлений на странице

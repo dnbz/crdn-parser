@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import logging
 import datetime
+
+import dateparser
+
 from sqlalchemy.orm import sessionmaker
 
 from kolesa_parser.db import (
@@ -127,6 +130,8 @@ class SaveCarPipeline:
         else:
             listing.condition = "На ходу"
 
+        listing.source_added_at = dateparser.parse(item.get("date_added", ""))
+
         listing.update_at = time_now()
         listing.create_at = time_now()
 
@@ -139,6 +144,8 @@ class SaveCarPipeline:
         else:
             listing.image = image
             listing.image_check = False
+
+        listing.images = item.get("images")
 
         # listing.percent_price = ""
         # listing.avg_price = item["avg_price"]

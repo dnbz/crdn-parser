@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 import scrapy
 import re2 as re
-from itemloaders.processors import Join, MapCompose, TakeFirst
-from scrapy.loader import ItemLoader
-from w3lib.html import remove_tags
 
-from kolesa_parser.db import Listing
+from itemloaders.processors import Join, MapCompose, TakeFirst
+from scrapy.utils.project import get_project_settings
+
+from w3lib.html import remove_tags
 
 
 def compose_title(value):
     return re.sub(" +", " ", value).strip()
+
+
+def get_img_size(value):
+    img_size = get_project_settings().get("KOLESA_IMG_SIZE")
+    return re.sub(r"full\.", f"{img_size}.", value)
 
 
 def get_numeric(value):
@@ -136,6 +141,9 @@ class Car(scrapy.Item):
     category = scrapy.Field(
         input_processor=MapCompose(str.strip),
         output_processor=Join(separator="/"),
+    )
+    images = scrapy.Field(
+        input_processor=MapCompose(get_img_size, str.strip),
     )
     date_added = scrapy.Field(
         input_processor=MapCompose(str.strip),

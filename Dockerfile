@@ -15,7 +15,6 @@ RUN apk add --no-cache \
     && pip install poetry
 
 COPY ./poetry.lock ./pyproject.toml ./poetry.toml ./
-
 RUN poetry install
 
 FROM base as final

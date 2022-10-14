@@ -71,6 +71,8 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
 
     il.add_xpath("image", "//button[@class='gallery__main js__gallery-main']//img/@src")
 
+    il.add_xpath("images", "//ul[contains(@class, 'gallery__thumbs-list')]//button/@data-href")
+
     il.add_xpath("new_badge", "//span[contains(@class, 'a-labels__item--new')]/text()")
 
     il.add_xpath(
