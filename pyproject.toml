@@ -16,7 +16,6 @@ scrapy-user-agents = "^0.1.1"
 google-re2 = "^0.2.20220601"
 SQLAlchemy = "^1.4.41"
 dateparser = "^1.1.1"
-setuptools = "^65.4.1"
 
 [tool.poetry.dev-dependencies]
 
