@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/app
       - ./docker/parser-supervisor.conf:/etc/supervisor/conf.d/parser.conf
-      - ./docker/crontab:/etc/crontab
+      - ./docker/crontab:/etc/mycrontab
     environment:
       TZ: Europe/Moscow
       # STOP_PARSER: "True"

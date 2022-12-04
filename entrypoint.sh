@@ -16,7 +16,7 @@ if [ "$STOP_PARSER" ];then
     sleep
 fi
 
-crontab /etc/crontab
+crontab /etc/mycrontab
 crond
 
 exec supervisord
