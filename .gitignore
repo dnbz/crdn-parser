@@ -9,4 +9,4 @@ proxies.txt
 
 __pycache__/
 
-supervisor.pid
+/supervisord.pid
