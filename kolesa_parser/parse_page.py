@@ -36,6 +36,14 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
     if card_date is not None:
         il.add_value("date_added", card_date)
 
+    # определяем готов ли пользователь меняться по поиску ключевых слов в описании
+    description = response.xpath(
+        "//div[@class='offer__description']/div[last()][@class='text']/p/text()"
+    ).get()
+    il.add_value("description", description)
+
+    il.add_value("exchange_check", check_exchange(description))
+
     # il.add_xpath("title", "//h1[@class='offer__title']/span")
     il.add_xpath(
         "category", "//div[@class='offer__breadcrumps']//a[@itemprop='url']/text()"
@@ -64,14 +72,12 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
         "complectation",
         "//div[@class='offer__description']/div[1][@class='text']/p/text()",
     )
-    il.add_xpath(
-        "description",
-        "//div[@class='offer__description']/div[last()][@class='text']/p/text()",
-    )
 
     il.add_xpath("image", "//button[@class='gallery__main js__gallery-main']//img/@src")
 
-    il.add_xpath("images", "//ul[contains(@class, 'gallery__thumbs-list')]//button/@data-href")
+    il.add_xpath(
+        "images", "//ul[contains(@class, 'gallery__thumbs-list')]//button/@data-href"
+    )
 
     il.add_xpath("new_badge", "//span[contains(@class, 'a-labels__item--new')]/text()")
 
@@ -81,3 +87,34 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
     )
 
     return il.load_item()
+
+
+def check_exchange(description: str | None) -> bool:
+    if not description:
+        return False
+
+    description = description.lower()
+    EXCHANGE_KEYWORDS = ["обмен", "меняю"]
+    NO_EXCHANGE_KEYWORDS = [
+        "не меняю",
+        "без обмен",
+        "нет обмен",
+        "обмена нет",
+        "обмен жок",
+        "обмен жоқ"
+        "обмена жок",
+        "обмен не предлагать",
+        "обмены не предлагать",
+        "обмен не интересует",
+        "обмены не интересуют",
+    ]
+
+    for keyword in NO_EXCHANGE_KEYWORDS:
+        if description.find(keyword) != -1:
+            return False
+
+    for keyword in EXCHANGE_KEYWORDS:
+        if description.find(keyword) != -1:
+            return True
+
+    return False

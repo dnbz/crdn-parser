@@ -2,7 +2,7 @@
 import scrapy
 import re2 as re
 
-from itemloaders.processors import Join, MapCompose, TakeFirst
+from itemloaders.processors import Join, MapCompose, TakeFirst, Identity
 from scrapy.utils.project import get_project_settings
 
 from w3lib.html import remove_tags
@@ -104,6 +104,10 @@ class Car(scrapy.Item):
     )
     description = scrapy.Field(
         input_processor=MapCompose(remove_tags, str.strip),
+        output_processor=TakeFirst(),
+    )
+    exchange_check = scrapy.Field(
+        input_processor=Identity(),
         output_processor=TakeFirst(),
     )
     brand = scrapy.Field(

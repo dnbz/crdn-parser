@@ -116,6 +116,8 @@ class SaveCarPipeline:
             if item.get("description") is not None
             else None
         )
+
+        listing.exchange_check = item.get("exchange_check")
         listing.complectation = (
             item.get("complectation")[:254]
             if item.get("complectation") is not None
