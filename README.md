@@ -1,6 +1,6 @@
 # Парсер
 
-Для конфигуриции используется `.env` файл.
+Для конфигурации используется `.env` файл.
 
 Для подключения с базе добавьте в него переменную `DB_CONNECTION`
 
@@ -27,3 +27,4 @@ STDOUT_LOG=True poetry run scrapy crawl kolesa-spider -a 'page=https://kolesa.kz
 # парсинг детализации
 STDOUT_LOG=True poetry run scrapy crawl single-spider -a 'detail=https://kolesa.kz/a/show/141671671'
 ```
+~~~~
