@@ -7,7 +7,7 @@ from scrapy.loader import ItemLoader
 
 from kolesa_parser.items import Car
 from kolesa_parser.debug_save import debug_save
-from kolesa_parser.settings import BASEURL
+from kolesa_parser.settings import BASEURL, EXCHANGE_KEYWORDS, NO_EXCHANGE_KEYWORDS
 
 
 def parse_page(response, card_link=None, card_date=None, card_title=None):
@@ -94,20 +94,6 @@ def check_exchange(description: str | None) -> bool:
         return False
 
     description = description.lower()
-    EXCHANGE_KEYWORDS = ["обмен", "меняю"]
-    NO_EXCHANGE_KEYWORDS = [
-        "не меняю",
-        "без обмен",
-        "нет обмен",
-        "обмена нет",
-        "обмен жок",
-        "обмен жоқ"
-        "обмена жок",
-        "обмен не предлагать",
-        "обмены не предлагать",
-        "обмен не интересует",
-        "обмены не интересуют",
-    ]
 
     for keyword in NO_EXCHANGE_KEYWORDS:
         if description.find(keyword) != -1:
