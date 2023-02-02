@@ -11,7 +11,6 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 RUN apk add --no-cache \
         g++ gcc \
         py3-pybind11-dev \
-        re2-dev\
     && pip install poetry
 
 COPY ./poetry.lock ./pyproject.toml ./poetry.toml ./
@@ -27,8 +26,8 @@ RUN apk add --no-cache \
         busybox-initscripts openrc \
         ca-certificates \
         poetry \
-        libpq \
-        re2
+        libpq
+
 
 COPY --from=builder /root/.cache/pypoetry /root/.cache/pypoetry
 COPY ./docker/supervisord.conf /etc/supervisord.conf

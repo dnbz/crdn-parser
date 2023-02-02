@@ -13,7 +13,6 @@ Scrapy = "^2.6.3"
 scrapy-fake-useragent = "^1.4.4"
 scrapy-rotating-proxies = "^0.6.2"
 scrapy-user-agents = "^0.1.1"
-google-re2 = "^0.2.20220601"
 SQLAlchemy = "^1.4.41"
 dateparser = "^1.1.1"
 

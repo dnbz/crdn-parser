@@ -164,14 +164,6 @@ docs = ["furo (>=2022.9.29)", "sphinx (>=5.3)", "sphinx-autodoc-typehints (>=1.1
 testing = ["covdefaults (>=2.2.2)", "coverage (>=6.5)", "pytest (>=7.2)", "pytest-cov (>=4)", "pytest-timeout (>=2.1)"]
 
 [[package]]
-name = "google-re2"
-version = "0.2.20220601"
-description = "RE2 Python bindings"
-category = "main"
-optional = false
-python-versions = "~=3.7"
-
-[[package]]
 name = "greenlet"
 version = "2.0.1"
 description = "Lightweight in-process concurrent programming"
@@ -721,7 +713,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "391534fa5596fe142e59a7cd952a6e508a0900c5a017a6f90236f89c593ce1ff"
+content-hash = "d1622f22e4f8d10ad422eabadd2a6a12ac55d8c85dee09de4287461a14e445c1"
 
 [metadata.files]
 attrs = []
@@ -738,7 +730,6 @@ dateparser = []
 fake-useragent = []
 faker = []
 filelock = []
-google-re2 = []
 greenlet = []
 hyperlink = []
 idna = []

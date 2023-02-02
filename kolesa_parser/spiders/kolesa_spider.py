@@ -3,7 +3,6 @@ import scrapy
 import logging
 import time
 import os
-import re2 as re
 
 from urllib.parse import urlparse
 from urllib.parse import parse_qs

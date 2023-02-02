@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import scrapy
 from scrapy.http.request import Request
-import re2 as re
+import re
 
 from scrapy.loader import ItemLoader
 from w3lib.html import remove_tags

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import scrapy
-import re2 as re
+import re
 
 from itemloaders.processors import Join, MapCompose, TakeFirst, Identity
 from scrapy.utils.project import get_project_settings
