@@ -97,7 +97,12 @@ class SaveCarPipeline:
             listing.region = city.region.name
 
         listing.body = item.get("body")
-        listing.engine_type = item.get("engine_type")
+
+        if item.get("source_engine_type") == "электрический":
+            listing.engine_type = "Электричество"
+        else:
+            listing.engine_type = item.get("engine_type")
+
         listing.engine_volume = item.get("engine_volume")
         listing.transmission = (
             "АКПП"

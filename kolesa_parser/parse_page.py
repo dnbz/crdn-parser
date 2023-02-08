@@ -50,6 +50,7 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
     )
     il.add_xpath("brand", "//span[@itemprop='brand']/text()")
     il.add_xpath("city", "//dt[@title='Город']/../dd/text()")
+    il.add_xpath("source_engine_type", "//dt[@title='Двигатель']/../dd/text()")
     il.add_xpath("body", "//dt[@title='Кузов']/../dd/text()")
     il.add_xpath("rudder", "//dt[@title='Руль']/../dd/text()")
     il.add_xpath("color", "//dt[@title='Цвет']/../dd/text()")

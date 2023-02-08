@@ -80,6 +80,10 @@ class Car(scrapy.Item):
         input_processor=MapCompose(get_engine_type, str.strip),
         output_processor=TakeFirst(),
     )
+    source_engine_type = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst(),
+    )
     engine_volume = scrapy.Field(
         input_processor=MapCompose(get_engine_volume, str.strip),
         output_processor=TakeFirst(),
