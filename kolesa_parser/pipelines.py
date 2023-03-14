@@ -105,9 +105,9 @@ class SaveCarPipeline:
 
         listing.engine_volume = item.get("engine_volume")
         listing.transmission = (
-            "АКПП"
+            "механика"
             if item.get("transmission") == "механика"
-            else item.get("transmission")
+            else "автомат"
         )
         listing.transmission_description = item.get("transmission")
         listing.customs_cleared = item.get("customs_cleared")
