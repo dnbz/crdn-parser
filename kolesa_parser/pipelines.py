@@ -98,11 +98,13 @@ class SaveCarPipeline:
 
         listing.body = item.get("body")
 
+        # тип двигателя для электромобилей определяется в отдельном поле
         if item.get("source_engine_type") == "электрический":
-            listing.engine_type = "Электричество"
+            listing.engine_type = "электрический"
         else:
             listing.engine_type = item.get("engine_type")
 
+        # игнорируем подтипы АКПП
         listing.engine_volume = item.get("engine_volume")
         listing.transmission = (
             "механика"
@@ -111,7 +113,14 @@ class SaveCarPipeline:
         )
         listing.transmission_description = item.get("transmission")
         listing.customs_cleared = item.get("customs_cleared")
-        listing.color = item.get("color")
+
+        # у цветов вида "<цвет> металлик" убираем "металлик"
+        color = item.get("color")
+        if type(color) is str:
+            color = color.replace("металлик", "").strip()
+
+        listing.color = color
+
         listing.rudder = item.get("rudder")
         listing.gearing = item.get("gearing")
         listing.mileage = item.get("mileage")
