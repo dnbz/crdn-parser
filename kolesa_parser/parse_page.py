@@ -4,7 +4,6 @@ import logging
 
 from scrapy.loader import ItemLoader
 
-
 from kolesa_parser.items import Car
 from kolesa_parser.debug_save import debug_save
 from kolesa_parser.settings import BASEURL, EXCHANGE_KEYWORDS, NO_EXCHANGE_KEYWORDS
@@ -13,9 +12,8 @@ from kolesa_parser.settings import BASEURL, EXCHANGE_KEYWORDS, NO_EXCHANGE_KEYWO
 def parse_page(response, card_link=None, card_date=None, card_title=None):
     # debug save when page isn't loaded properly
     if (
-        not response.xpath("//h1[@class='offer__title']/span[@itemprop='brand']").get()
+            not response.xpath("//h1[@class='offer__title']/span[@itemprop='brand']").get()
     ) and card_link is not None:
-
         item_id = os.path.basename(card_link)
         logging.error(
             f"Page isn't loaded properly. Saving it to file debug/{item_id}.html. Url: {response.url}"
@@ -45,6 +43,7 @@ def parse_page(response, card_link=None, card_date=None, card_title=None):
     il.add_value("exchange_check", check_exchange(description))
 
     # il.add_xpath("title", "//h1[@class='offer__title']/span")
+    # breadcrumps is typo in kolesa
     il.add_xpath(
         "category", "//div[@class='offer__breadcrumps']//a[@itemprop='url']/text()"
     )

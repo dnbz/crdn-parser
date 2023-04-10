@@ -22,9 +22,9 @@ docker-compose up
 
 ```sh
 # парсинг заданной категории
-STDOUT_LOG=True poetry run scrapy crawl kolesa-spider -a 'page=https://kolesa.kz/cars/vaz/'
+pdm run scrapy crawl kolesa-spider -a 'page=https://kolesa.kz/cars/vaz/'
 
 # парсинг детализации
-STDOUT_LOG=True poetry run scrapy crawl single-spider -a 'detail=https://kolesa.kz/a/show/141671671'
+pdm run scrapy crawl single-spider -a 'detail=https://kolesa.kz/a/show/141671671'
 ```
 ~~~~

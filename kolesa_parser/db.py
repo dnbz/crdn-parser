@@ -28,6 +28,10 @@ Base = automap_base()
 class Listing(Base):
     __tablename__ = "offer"
 
+    # primary key is id column
+    id = Column(Integer, primary_key=True)
+
+
     def as_dict(obj):
         data = obj.__dict__
         data.pop("_sa_instance_state")

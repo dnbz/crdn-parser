@@ -1,40 +1,17 @@
-FROM python:alpine3.16 as base
+FROM python:3.11-slim
 
 WORKDIR /app
 
-FROM base as builder
+# install pdm and supervisor
+RUN pip install -U pip setuptools wheel
+RUN pip install pdm supervisor
 
-ENV PIP_DEFAULT_TIMEOUT=100 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
+COPY pyproject.toml pdm.lock ./
+RUN pdm install --prod --no-lock --no-editable
 
-RUN apk add --no-cache \
-        g++ gcc \
-        py3-pybind11-dev \
-    && pip install poetry
-
-COPY ./poetry.lock ./pyproject.toml ./poetry.toml ./
-RUN poetry install
-
-FROM base as final
-
-RUN apk add --no-cache \
-        fish \
-        tzdata \
-        curl \
-        supervisor \
-        busybox-initscripts openrc \
-        ca-certificates \
-        poetry \
-        libpq
-
-
-COPY --from=builder /root/.cache/pypoetry /root/.cache/pypoetry
 COPY ./docker/supervisord.conf /etc/supervisord.conf
+COPY ./docker/supervisord.conf.d /etc/supervisor/conf.d
 
-# COPY ./ ./
+COPY . .
 
-COPY ./entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
-
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from urllib.parse import parse_qs
 
 from scrapy import signals
+from scrapy.http.response import Response
 from scrapy.loader import ItemLoader
 from scrapy.exceptions import CloseSpider
 from scrapy.utils.project import get_project_settings
@@ -87,14 +88,14 @@ class KolesaSpider(scrapy.Spider):
 
         return job_urls
 
-    def parse(self, response):
+    def parse(self, response: Response):
         car_cards = response.xpath(
             "//div[@class='a-list__item']/div[contains(@class, 'a-card') and not(contains(@class, 'item-banner'))]"
         )
+
         self.crawler.stats.inc_value("total_card_items", len(car_cards))
 
         for card in car_cards:
-
             date = card.xpath(
                 ".//span[contains(@class, 'a-card__param--date')]/text()"
             ).get()

@@ -1,2 +1,7 @@
 logs/
 debug/
+
+.venv
+
+.env
+.pdm.toml

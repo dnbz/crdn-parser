@@ -18,6 +18,8 @@ load_dotenv()
 SPIDER_MODULES = ["kolesa_parser.spiders"]
 NEWSPIDER_MODULE = "kolesa_parser.spiders"
 
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
+
 BASEURL = "https://kolesa.kz"
 DOMAIN_NAME = "kolesa.kz"
 
@@ -52,10 +54,7 @@ PAGE_STOP_NO_NEW = os.environ.get("PARSER_PAGE_STOP_NO_NEW")
 # количество объявлений на странице
 PAGE_SIZE = 20
 
-STDOUT_LOG = bool(os.environ.get("STDOUT_LOG", False))
-
-if not STDOUT_LOG:
-    LOG_FILE = Path.cwd() / ("logs/" + datetime.now().strftime("%Y-%m-%d") + "_parser.log")
+STDOUT_LOG = True
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -121,9 +120,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
+EXTENSIONS = {
+    'kolesa_parser.extensions.SentryLogging': -1,
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-# }
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
