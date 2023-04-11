@@ -7,5 +7,6 @@ services:
     restart: always
     volumes:
       - ./logs:/app/logs
+      - ./proxies.txt:/app/proxies.txt
     environment:
       TZ: Europe/Moscow
