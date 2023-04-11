@@ -1,0 +1,37 @@
+stages:
+  - build
+  - deploy
+
+build:
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [ '' ]
+
+  stage: build
+  script:
+    - echo "${DOCKER_AUTH_CONFIG}" > /kaniko/.docker/config.json
+
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${PARSER_REGISTRY_IMAGE}:latest"
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'prod'
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo 'StrictHostKeyChecking=accept-new' > ~/.ssh/config
+
+  script:
+    - ssh $DEPLOY_HOST "cd crdnparser && git pull && make deploy"
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'prod'

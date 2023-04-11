@@ -3,6 +3,7 @@ services:
     container_name: kolesa_parser
     env_file: .env
     build: ./
+    image: registry.crdn.kz/crdn-parser
     restart: always
     volumes:
       - ./logs:/app/logs
