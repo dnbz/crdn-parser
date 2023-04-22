@@ -60,7 +60,7 @@ class SaveCarPipeline:
         # why is this parameter occasionally empty?
         listing.category = item.get("category")
 
-        listing.name = item["title"]
+        listing.name = item.get("title")
         listing.year = item["year"]
         listing.price = item["price"]
 
