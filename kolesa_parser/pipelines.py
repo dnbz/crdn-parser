@@ -22,6 +22,8 @@ from kolesa_parser.db import (
 
 logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=logging.INFO)
 
+DB_MAX_RETRIES = 3
+
 
 def time_now():
     return datetime.datetime.now().replace(microsecond=0)
@@ -169,16 +171,20 @@ class SaveCarPipeline:
         # queue parser notification job
         queue = queueParser_push(listing.source_id)
 
-        try:
-            session.add(listing)
-            session.add(queue)
-            session.commit()
-
-            spider.crawler.stats.inc_value("db_added_items")
-            spider.items_no_new = 0
-
-        except:
-            session.rollback()
-            raise
+        for i in range(DB_MAX_RETRIES):
+            try:
+                session.add(listing)
+                session.add(queue)
+                session.commit()
+                spider.crawler.stats.inc_value("db_added_items")
+                spider.items_no_new = 0
+                break  # exit the retry loop if the operation succeeds
+            except OperationalError as e:
+                if i < MAX_RETRIES - 1:  # retry the operation
+                    print(f"Caught {e}. Retrying in 5 seconds...")
+                    time.sleep(5)
+                else:
+                    session.rollback()
+                    raise e  # re-raise the exception if retries fail
 
         return item
