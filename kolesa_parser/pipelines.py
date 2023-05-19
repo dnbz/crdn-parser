@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 import logging
 import datetime
+import re
+import time
 
 import dateparser
-
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import OperationalError
 
 from kolesa_parser.db import (
     Listing,
     City,
-    Region,
     Brand,
     SeriaModel,
     Seria,
     SeriaBrand,
-    QueueParser,
     queueParser_push,
     get_session,
     engine,
@@ -68,7 +67,11 @@ class SaveCarPipeline:
 
         # заполняем страну-производителя на основании марки
         listing.brand = item["brand"]
+
         listing.model = item.get("model")
+        if listing.model:
+            # remove extra data in parenthesis
+            listing.model = re.sub(r' \(.*?\)', '', listing.model)
 
         brand = session.query(Brand).filter(Brand.name.ilike(listing.brand)).first()
         if brand is not None:
@@ -180,7 +183,7 @@ class SaveCarPipeline:
                 spider.items_no_new = 0
                 break  # exit the retry loop if the operation succeeds
             except OperationalError as e:
-                if i < MAX_RETRIES - 1:  # retry the operation
+                if i < DB_MAX_RETRIES - 1:  # retry the operation
                     print(f"Caught {e}. Retrying in 5 seconds...")
                     time.sleep(5)
                 else:
