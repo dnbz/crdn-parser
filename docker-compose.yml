@@ -3,7 +3,7 @@ services:
     container_name: kolesa_parser
     env_file: .env
     build: ./
-    image: registry.meniay.com/crdn-parser
+    image: harbor.meniay.com/meniay/parser
     restart: always
     volumes:
       - ./logs:/app/logs
